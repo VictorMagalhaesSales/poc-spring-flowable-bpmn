@@ -1,31 +1,23 @@
-package org.poc.flowable;
+package org.poc.flowable.controller;
 
 import org.flowable.engine.impl.persistence.entity.HistoricProcessInstanceEntityImpl;
+import org.poc.flowable.service.ProcessesService;
+import org.poc.flowable.model.Models;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/info")
-public class InfoController {
+@RequestMapping("/process")
+public class ProcessController {
 
     @Autowired
-    FlowableService service;
+    ProcessesService service;
 
-    @GetMapping("/tasks")
-    public ResponseEntity<List<Models.TaskDTO>> getTasks() {
-        List<Models.TaskDTO> tasks = this.service.listAllTasks().stream()
-                .map(Models.TaskDTO::new)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(tasks);
-    }
-
-    @GetMapping("/process-definition")
+    @GetMapping("/definition")
     public ResponseEntity<List<Models.ProcessDTO>> getProcess() {
         List<Models.ProcessDTO> process = this.service.listProcessDefinitions().stream()
                 .map(Models.ProcessDTO::new)
@@ -33,10 +25,16 @@ public class InfoController {
         return ResponseEntity.ok(process);
     }
 
-    @GetMapping("/process-history")
+    @GetMapping("/history")
     public ResponseEntity<List<HistoricProcessInstanceEntityImpl>> getProcessHistory() {
         List<HistoricProcessInstanceEntityImpl> list = this.service.listProcessHistory();
         return ResponseEntity.ok(list);
+    }
+
+    @PutMapping(value = "/{key}", params = "start")
+    public ResponseEntity<Models.ProcessInstanceDTO> startProcess(@PathVariable String key) {
+        Models.ProcessInstanceDTO piDTO = new Models.ProcessInstanceDTO(service.startProcessInstance(key));
+        return ResponseEntity.ok(piDTO);
     }
 
 }

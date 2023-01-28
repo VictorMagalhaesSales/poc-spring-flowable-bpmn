@@ -1,4 +1,4 @@
-package org.poc.flowable;
+package org.poc.flowable.model;
 
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ProcessInstance;
@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class Models {
 
-    static class TaskDTO {
+    public static class TaskDTO {
 
         private String id;
         private String name;
@@ -72,7 +72,7 @@ public class Models {
         }
     }
 
-    static class ProcessDTO {
+    public static class ProcessDTO {
         private String id;
         private String name;
         private String description;
@@ -145,7 +145,7 @@ public class Models {
         }
     }
 
-    static class ProcessInstanceDTO {
+    public static class ProcessInstanceDTO {
         private String id;
         private String name;
         private String deploymentId;
