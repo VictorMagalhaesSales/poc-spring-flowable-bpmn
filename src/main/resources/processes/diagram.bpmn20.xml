@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+        xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+        xmlns:flowable="http://flowable.org/bpmn"
+        targetNamespace="Test Examples">
+
+    <process id="Process_1" name="The Study Process">
+        <startEvent id="StartEvent_1y45yut" name="Iniciar venda">
+          <outgoing>SequenceFlow_0h21x7r</outgoing>
+        </startEvent>
+        <userTask id="Task_1hcentk" name="Escolher produto" flowable:assignee="victor">
+          <incoming>SequenceFlow_0h21x7r</incoming>
+          <outgoing>Flow_1buz9k8</outgoing>
+        </userTask>
+        <sequenceFlow id="SequenceFlow_0h21x7r" sourceRef="StartEvent_1y45yut" targetRef="Task_1hcentk" />
+        <userTask id="Activity_12nchvn" name="Escolher forma de pagamento">
+          <incoming>Flow_1buz9k8</incoming>
+          <outgoing>Flow_0df946h</outgoing>
+        </userTask>
+        <sequenceFlow id="Flow_1buz9k8" sourceRef="Task_1hcentk" targetRef="Activity_12nchvn" />
+        <userTask id="Activity_1cstlv9" name="Revisar venda">
+          <incoming>Flow_0df946h</incoming>
+          <outgoing>Flow_1h4g2wp</outgoing>
+        </userTask>
+        <sequenceFlow id="Flow_0df946h" sourceRef="Activity_12nchvn" targetRef="Activity_1cstlv9" />
+        <endEvent id="Event_0uaueuf" name="Venda finalizada">
+          <incoming>Flow_1h4g2wp</incoming>
+        </endEvent>
+        <sequenceFlow id="Flow_1h4g2wp" sourceRef="Activity_1cstlv9" targetRef="Event_0uaueuf" />
+    </process>
+
+</definitions>
