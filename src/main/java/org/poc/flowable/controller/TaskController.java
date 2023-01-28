@@ -1,6 +1,7 @@
 package org.poc.flowable.controller;
 
 import org.poc.flowable.model.Models;
+import org.poc.flowable.model.ProcessVariablesDTO;
 import org.poc.flowable.service.TasksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +40,8 @@ public class TaskController {
     }
 
     @PutMapping(value = "/{taskId}", params = "complete")
-    public ResponseEntity<Void> completeTask(@PathVariable String taskId) {
-        this.service.completeTaskById(taskId);
+    public ResponseEntity<Void> completeTask(@PathVariable String taskId, @RequestBody ProcessVariablesDTO body) {
+        this.service.completeTaskById(taskId, body.getVariables());
         return ResponseEntity.noContent().build();
     }
 

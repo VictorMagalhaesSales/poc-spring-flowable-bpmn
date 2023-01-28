@@ -4,7 +4,7 @@
         xmlns:flowable="http://flowable.org/bpmn"
         targetNamespace="Test Examples">
 
-    <process id="Process_1" name="The Study Process">
+    <process id="simple-process" name="Simple Process">
         <startEvent id="StartEvent_1y45yut" name="Iniciar venda">
           <outgoing>SequenceFlow_0h21x7r</outgoing>
         </startEvent>

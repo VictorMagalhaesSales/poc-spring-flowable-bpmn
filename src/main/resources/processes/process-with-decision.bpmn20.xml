@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions
+        xmlns:flowable="http://flowable.org/bpmn"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+        xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+        xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+        xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+        id="Definitions_19ryiuu"
+        targetNamespace="http://bpmn.io/schema/bpmn"
+        exporter="bpmn-js (https://demo.bpmn.io)"
+        exporterVersion="11.1.0">
+
+  <bpmn:process id="process-with-decision" name="Process with decision">
+
+    <bpmn:startEvent id="StartEvent" name="Venda iniciada"/>
+
+    <bpmn:sequenceFlow id="Flow_17jykct" sourceRef="StartEvent" targetRef="task_revisar-detalhes" />
+
+    <bpmn:userTask id="task_revisar-detalhes" name="Revisar detalhes da venda"/>
+
+    <bpmn:sequenceFlow id="Flow_1787db7" sourceRef="task_revisar-detalhes" targetRef="gw-aprovar-venda" />
+
+    <bpmn:exclusiveGateway id="gw-aprovar-venda" name="Aprovar venda"/>
+      <bpmn:sequenceFlow sourceRef="gw-aprovar-venda" targetRef="task_email-venda-realizada">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">
+          <![CDATA[ ${approved} ]]>
+        </bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow sourceRef="gw-aprovar-venda" targetRef="task_email-venda-reprovada">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">
+          <![CDATA[ ${!approved} ]]>
+        </bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+
+    <bpmn:serviceTask id="task_email-venda-realizada" name="Enviar email de venda realizada" flowable:class="org.poc.flowable.service.deletage.SendEmailDelegate"/>
+    <bpmn:serviceTask id="task_email-venda-reprovada" name="Enviar email de venda reprovada" flowable:class="org.poc.flowable.service.deletage.SendEmailDelegate"/>
+
+    <bpmn:endEvent id="FinishEvent_venda-realizada" name="Venda finalizada"/>
+      <bpmn:sequenceFlow id="Flow_0eg9002" sourceRef="task_email-venda-realizada" targetRef="FinishEvent_venda-realizada" />
+
+    <bpmn:endEvent id="FinishEvent_venda-reprovada" name="Venda cancelada"/>
+      <bpmn:sequenceFlow id="Flow_071bcg2" sourceRef="task_email-venda-reprovada" targetRef="FinishEvent_venda-reprovada" />
+
+
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process-with-decision">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent">
+        <dc:Bounds x="172" y="172" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="155" y="215" width="71" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="gw-aprovar-venda_di" bpmnElement="gw-aprovar-venda" isMarkerVisible="true">
+        <dc:Bounds x="455" y="165" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="515" y="183" width="71" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="task_revisar-detalhes_di" bpmnElement="task_revisar-detalhes">
+        <dc:Bounds x="270" y="150" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="task_email-venda-realizada_di" bpmnElement="task_email-venda-realizada">
+        <dc:Bounds x="610" y="70" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0y01tys" bpmnElement="task_email-venda-reprovada">
+        <dc:Bounds x="610" y="210" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="FinishEvent_venda-realizada_di" bpmnElement="FinishEvent_venda-realizada">
+        <dc:Bounds x="792" y="92" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="770" y="135" width="80" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0fq2b3j" bpmnElement="FinishEvent_venda-reprovada">
+        <dc:Bounds x="792" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="768" y="275" width="84" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17jykct_di" bpmnElement="Flow_17jykct">
+        <di:waypoint x="208" y="190" />
+        <di:waypoint x="270" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1787db7_di" bpmnElement="Flow_1787db7">
+        <di:waypoint x="370" y="190" />
+        <di:waypoint x="455" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0y7mhci_di" bpmnElement="Flow_0y7mhci">
+        <di:waypoint x="480" y="165" />
+        <di:waypoint x="480" y="110" />
+        <di:waypoint x="610" y="110" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="523" y="92" width="46" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15j3oi1_di" bpmnElement="Flow_15j3oi1">
+        <di:waypoint x="480" y="215" />
+        <di:waypoint x="480" y="250" />
+        <di:waypoint x="610" y="250" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="521" y="260" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0eg9002_di" bpmnElement="Flow_0eg9002">
+        <di:waypoint x="710" y="110" />
+        <di:waypoint x="792" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_071bcg2_di" bpmnElement="Flow_071bcg2">
+        <di:waypoint x="710" y="250" />
+        <di:waypoint x="792" y="250" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</bpmn:definitions>

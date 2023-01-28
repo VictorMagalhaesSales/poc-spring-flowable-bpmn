@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TasksService {
@@ -17,8 +18,8 @@ public class TasksService {
         this.taskService.claim(taskId, userId);
     }
 
-    public void completeTaskById(String taskId) {
-        this.taskService.complete(taskId);
+    public void completeTaskById(String taskId, Map<String, Object> variables) {
+        this.taskService.complete(taskId, variables);
     }
 
     public List<Task> listAllTasks() {

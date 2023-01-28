@@ -4,7 +4,7 @@
         xmlns:flowable="http://flowable.org/bpmn"
         targetNamespace="Test Examples">
 
-    <process id="testProcess" name="The One Task Process">
+    <process id="one-task-process" name="One Task Process">
         <startEvent id="theStart" />
         <sequenceFlow id="flow1" sourceRef="theStart" targetRef="theTask" />
         <userTask id="theTask" name="my task" flowable:assignee="kermit" />
