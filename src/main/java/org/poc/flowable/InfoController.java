@@ -1,7 +1,6 @@
 package org.poc.flowable;
 
-import org.flowable.engine.RepositoryService;
-import org.flowable.engine.TaskService;
+import org.flowable.engine.impl.persistence.entity.HistoricProcessInstanceEntityImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,15 +15,11 @@ import java.util.stream.Collectors;
 public class InfoController {
 
     @Autowired
-    TaskService taskService;
-
-    @Autowired
-    RepositoryService repositoryService;
+    FlowableService service;
 
     @GetMapping("/tasks")
     public ResponseEntity<List<Models.TaskDTO>> getTasks() {
-        List<Models.TaskDTO> tasks = taskService.createTaskQuery().list()
-                .stream()
+        List<Models.TaskDTO> tasks = this.service.listAllTasks().stream()
                 .map(Models.TaskDTO::new)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(tasks);
@@ -32,11 +27,16 @@ public class InfoController {
 
     @GetMapping("/process-definition")
     public ResponseEntity<List<Models.ProcessDTO>> getProcess() {
-        List<Models.ProcessDTO> process = repositoryService.createProcessDefinitionQuery().list()
-                .stream()
+        List<Models.ProcessDTO> process = this.service.listProcessDefinitions().stream()
                 .map(Models.ProcessDTO::new)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(process);
+    }
+
+    @GetMapping("/process-history")
+    public ResponseEntity<List<HistoricProcessInstanceEntityImpl>> getProcessHistory() {
+        List<HistoricProcessInstanceEntityImpl> list = this.service.listProcessHistory();
+        return ResponseEntity.ok(list);
     }
 
 }

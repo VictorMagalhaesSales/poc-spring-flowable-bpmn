@@ -1,15 +1,16 @@
 package org.poc.flowable;
 
-import org.flowable.engine.ProcessEngine;
-import org.flowable.engine.RepositoryService;
-import org.flowable.engine.RuntimeService;
-import org.flowable.engine.TaskService;
+import org.flowable.engine.*;
+import org.flowable.engine.history.HistoricProcessInstance;
+import org.flowable.engine.impl.persistence.entity.HistoricProcessInstanceEntityImpl;
+import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FlowableService {
@@ -26,8 +27,19 @@ public class FlowableService {
     @Autowired
     RuntimeService runtimeService;
 
+    @Autowired
+    HistoryService historyService;
+
     public ProcessInstance startProcessInstance(String key) {
         return this.runtimeService.startProcessInstanceByKey(key);
+    }
+
+    public List<ProcessDefinition> listProcessDefinitions() {
+        return repositoryService.createProcessDefinitionQuery().list();
+    }
+
+    public List<Task> listAllTasks() {
+        return taskService.createTaskQuery().list();
     }
 
     public List<Task> listTasksByStartedProcessId(String processInstanceId) {
@@ -42,6 +54,12 @@ public class FlowableService {
         this.taskService.complete(taskId);
     }
 
-
+    public List<HistoricProcessInstanceEntityImpl> listProcessHistory() {
+        return this.historyService.createHistoricProcessInstanceQuery()
+                .list()
+                    .stream()
+                    .map(hpi -> (HistoricProcessInstanceEntityImpl) hpi)
+                    .collect(Collectors.toList());
+    }
 
 }
