@@ -24,6 +24,14 @@ public class TaskController {
         return ResponseEntity.ok(tasks);
     }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<Models.TaskDTO>> getTasksByUserId(@PathVariable String userId) {
+        List<Models.TaskDTO> tasks = service.listByUserId(userId).stream()
+                .map(Models.TaskDTO::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(tasks);
+    }
+
     @PutMapping(value = "/{taskId}", params = "claim")
     public ResponseEntity<Void> claimTask(@PathVariable String taskId, @RequestParam String userId) {
         this.service.claimTaskById(taskId, userId);

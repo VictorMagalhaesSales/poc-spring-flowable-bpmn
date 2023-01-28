@@ -28,4 +28,8 @@ public class TasksService {
     public List<Task> listTasksByStartedProcessId(String processInstanceId) {
         return this.taskService.createTaskQuery().processInstanceBusinessKey(processInstanceId).list();
     }
+
+    public List<Task> listByUserId(String userId) {
+        return this.taskService.createTaskQuery().taskInvolvedUser(userId).list();
+    }
 }
