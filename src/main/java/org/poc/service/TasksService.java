@@ -1,4 +1,4 @@
-package org.poc.flowable.service;
+package org.poc.service;
 
 import org.flowable.engine.TaskService;
 import org.flowable.task.api.Task;

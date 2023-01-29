@@ -1,4 +1,4 @@
-package org.poc.flowable.service.deletage;
+package org.poc.service.deletage;
 
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;

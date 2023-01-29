@@ -1,4 +1,4 @@
-package org.poc.flowable.service.listener;
+package org.poc.service.listener;
 
 import org.flowable.common.engine.api.delegate.event.FlowableEngineEventType;
 import org.flowable.common.engine.api.delegate.event.FlowableEvent;

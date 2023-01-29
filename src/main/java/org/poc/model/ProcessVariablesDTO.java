@@ -1,4 +1,4 @@
-package org.poc.flowable.model;
+package org.poc.model;
 
 import lombok.Data;
 

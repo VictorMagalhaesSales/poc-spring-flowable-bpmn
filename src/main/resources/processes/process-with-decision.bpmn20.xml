@@ -14,7 +14,7 @@
   <bpmn:process id="process-with-decision" name="Process with decision">
 
     <bpmn:extensionElements>
-      <flowable:eventListener class="org.poc.flowable.service.listener.TaskMonitorEventListener" />
+      <flowable:eventListener class="org.poc.service.listener.TaskMonitorEventListener" />
     </bpmn:extensionElements>
 
     <bpmn:startEvent id="StartEvent" name="Venda iniciada"/>
@@ -37,8 +37,8 @@
         </bpmn:conditionExpression>
       </bpmn:sequenceFlow>
 
-    <bpmn:serviceTask id="task_email-venda-realizada" name="Enviar email de venda realizada" flowable:class="org.poc.flowable.service.deletage.SendEmailDelegate"/>
-    <bpmn:serviceTask id="task_email-venda-reprovada" name="Enviar email de venda reprovada" flowable:class="org.poc.flowable.service.deletage.SendEmailDelegate"/>
+    <bpmn:serviceTask id="task_email-venda-realizada" name="Enviar email de venda realizada" flowable:class="org.poc.service.deletage.SendEmailDelegate"/>
+    <bpmn:serviceTask id="task_email-venda-reprovada" name="Enviar email de venda reprovada" flowable:class="org.poc.service.deletage.SendEmailDelegate"/>
 
     <bpmn:endEvent id="FinishEvent_venda-realizada" name="Venda finalizada"/>
       <bpmn:sequenceFlow id="Flow_0eg9002" sourceRef="task_email-venda-realizada" targetRef="FinishEvent_venda-realizada" />

@@ -1,8 +1,8 @@
-package org.poc.flowable.controller;
+package org.poc.controller;
 
-import org.poc.flowable.model.Models;
-import org.poc.flowable.model.ProcessVariablesDTO;
-import org.poc.flowable.service.TasksService;
+import org.poc.model.Models;
+import org.poc.model.ProcessVariablesDTO;
+import org.poc.service.TasksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

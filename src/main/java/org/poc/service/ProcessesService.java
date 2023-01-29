@@ -1,4 +1,4 @@
-package org.poc.flowable.service;
+package org.poc.service;
 
 import org.flowable.engine.*;
 import org.flowable.engine.impl.persistence.entity.HistoricProcessInstanceEntityImpl;

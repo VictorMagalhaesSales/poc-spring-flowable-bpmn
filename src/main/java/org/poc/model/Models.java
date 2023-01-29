@@ -1,4 +1,4 @@
-package org.poc.flowable.model;
+package org.poc.model;
 
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ProcessInstance;
